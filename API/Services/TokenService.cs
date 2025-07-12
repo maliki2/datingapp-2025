@@ -24,11 +24,12 @@ public class TokenService(IConfiguration config) : ITokenService
 
         SecurityTokenDescriptor tokenDescriptor = new()
         {
+            
             Subject = new(claims),
             Expires = DateTime.UtcNow.AddDays(7),
-            SigningCredentials = new(key, SecurityAlgorithms.HmacSha256Signature)
+            SigningCredentials = new(key, SecurityAlgorithms.HmacSha256Signature),
         };
-
+      
         JwtSecurityTokenHandler tokenHandler = new();
         var token = tokenHandler.CreateToken(tokenDescriptor);
 

@@ -19,11 +19,11 @@ public class AccountController(AppDbContext context, ITokenService tokenService)
     public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDTO)
     {
         //Make sure we do not re-use an existing email for registration
-        if (await EmailExists(registerDTO.Email)) return Problem("Email Taken.");
+        if (await EmailExists(registerDTO.Email)) return Problem("Email Taken.", "account.register",400);
 
         using var hmac = new HMACSHA512();
 
-        var user = new AppUser
+        AppUser user = new ()
         {
             DisplayName = registerDTO.DisplayName,
             Email = registerDTO.Email,
